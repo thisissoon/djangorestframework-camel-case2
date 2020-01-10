@@ -63,6 +63,22 @@ class TestUnderscoreToCamel:
         }
         assert camelize(data) == output
 
+    def test_under_to_camel_keys_preserve_underscore_prefix(self):
+        data = {
+            "_pagination": {
+                "current_page": 1
+            },
+            "two_word": 1
+        }
+        output = {
+            "_pagination": {
+                "currentPage": 1
+            },
+            "twoWord": 1
+        }
+        options = {'preserve_underscore_prefix': True}
+        assert camelize(data, **options) == output
+
 
 class TestCamelToUnderscore:
     def test_camel_to_under_keys(self):

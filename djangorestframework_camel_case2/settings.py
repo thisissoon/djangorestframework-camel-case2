@@ -14,6 +14,9 @@ DEFAULTS = {
     'JSON_UNDERSCOREIZE': {
         'no_underscore_before_number': False,
     },
+    'JSON_CAMELIZE': {
+        'preserve_underscore_prefix': False
+    }
 }
 
 # List of settings that may be in string import notation.

@@ -3,7 +3,10 @@ from collections import OrderedDict
 
 import six
 
-camelize_re = re.compile(r"[a-z0-9]?_[a-z0-9]")
+def get_camelize_re(options):
+    if options.get('preserve_underscore_prefix'):
+        return re.compile(r"[a-z0-9]_[a-z0-9]")
+    return re.compile(r"[a-z0-9]?_[a-z0-9]")
 
 
 def underscore_to_camel(match):
@@ -14,12 +17,12 @@ def underscore_to_camel(match):
         return group[1].upper()
 
 
-def camelize(data):
+def camelize(data, **options):
     if isinstance(data, dict):
         new_dict = OrderedDict()
         for key, value in data.items():
             if isinstance(key, six.string_types) and '_' in key:
-                new_key = re.sub(camelize_re, underscore_to_camel, key)
+                new_key = re.sub(get_camelize_re(options), underscore_to_camel, key)
             else:
                 new_key = key
             new_dict[new_key] = camelize(value)
